@@ -14,3 +14,6 @@ inputs:
   wait:
     description: 'Optional, set to false to disable waiting on result. This action will succeed immediately. Forge action will be queued'
     default: true
+branding:
+  icon: 'terminal'
+  color: 'gray-dark'
