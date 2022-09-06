@@ -29,8 +29,8 @@ while [ $FORGE_TIMEOUT -gt 0 ]; do
   state=$(post $joburl "" | jq -r '.state')
   case $state in
     queued|running)
-      FORGE_TIMEOUT=$((FORGE_TIMEOUT-5));
-      sleep 5;;
+      FORGE_TIMEOUT=$((FORGE_TIMEOUT-1));
+      sleep 1;;
     success)
       exit 0;;
     *)
