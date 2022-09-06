@@ -1,0 +1,16 @@
+name: 'Workflow Forge Trigger'
+description: 'A Github workflow action to invoke a CloudVA Forge Trigger'
+runs:
+  using: 'docker'
+  # image: 'Dockerfile'
+  image: 'docker://ghcr.io/cloudvaio/workflow-forge-trigger:latest'
+inputs:
+  trigger_endpoint:
+    description: 'The HTTP URI of the trigger endpoint'
+    required: true
+  trigger_secret:
+    description: 'The secret with which a signature hash is generated'
+    required: true
+  wait:
+    description: 'Optional, set to false to disable waiting on result. This action will succeed immediately. Forge action will be queued'
+    default: true
