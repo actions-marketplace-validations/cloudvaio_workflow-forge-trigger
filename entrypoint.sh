@@ -7,6 +7,9 @@ if [ -z "$FORGE_SECRET" ]; then
   echo "No FORGE_SECRET"
   exit 1
 fi
+if [ -z "$FORGE_TIMEOUT" ]; then
+  FORGE_TIMEOUT=600
+fi
 function post(){
   endpoint=$1
   payload=$2
@@ -22,10 +25,11 @@ function post(){
 payload="$(jq -n 'env|with_entries(select(.key|test("GITHUB_|FORGE_")))')"
 id=$(post $FORGE_TRIGGER "$payload" | jq -r '.job')
 joburl=https://cloudva.io/job/$id/state
-while [ $wait = true ]; do
+while [ $FORGE_TIMEOUT -gt 0 ]; do
   state=$(post $joburl "" | jq -r '.state')
   case $state in
     queued|running)
+      FORGE_TIMEOUT=$((FORGE_TIMEOUT-5));
       sleep 5;;
     success)
       exit 0;;
@@ -33,4 +37,7 @@ while [ $wait = true ]; do
       exit 1;;
   esac
 done
-exit 0
+if [ $FORGE_TIMEOUT -gt 0 ]; then
+  exit 0
+fi
+exit 1
