@@ -3,7 +3,7 @@
 A Github workflow action to invoke CloudVA Forge Trigger and wait for its return code.
 Passes all GITHUB_* and FORGE_* environment variables to the Trigger target.
 
-##Usage:
+# Usage:
 ```yaml
   - name: Invoke deployment hook
     uses: cloudvaio/workflow-forge-trigger
